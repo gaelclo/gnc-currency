@@ -14,7 +14,6 @@ export class HomePage {
 
   ionViewWillEnter(): any {
     this.conversions = this.apiCurrency.getConversions();
-    console.log('converted: ', this.conversions);
   }
 
   hasConversion(): boolean {

@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 export class ApiCurrency {
 
     private url: string = 'http://api.fixer.io/';
-    private currenciesData: string = '../assets/currency.json'; 
+    private currenciesData: string = '../../resources/currency.json'; 
 
     private conversions = [];
 
@@ -24,7 +24,6 @@ export class ApiCurrency {
     addConversion(fromCurrency: string, toCurrency: string) {
         this.getCurrencyValue(fromCurrency, toCurrency).subscribe(result => {
             let rate = JSON.parse(result._body).rates;
-            console.log('out:', rate);
             this.conversions.push({fromCurrency: fromCurrency, toCurrency: toCurrency, rate: rate[toCurrency]});
         });
     }

@@ -17,7 +17,6 @@ export class AddPage {
 
   ionViewDidLoad() {
     this.apiCurrency.getCurrencies().subscribe(result => {
-      console.log('currencies: ', result._body);
       this.currencies = JSON.parse(result._body);
     });
   }
