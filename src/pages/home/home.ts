@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
+import {ApiCurrency} from '../../shared/api-currency.service';
 
 @Component({
   selector: 'page-home',
@@ -8,8 +8,16 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  private conversions: any;
 
+  constructor(public navCtrl: NavController, private apiCurrency: ApiCurrency) {}
+
+  ionViewWillEnter(): any {
+    this.conversions = this.apiCurrency.getConversions();
+    console.log('converted: ', this.conversions);
   }
 
+  hasConversion(): boolean {
+    return this.conversions && this.conversions.length > 0;
+  }
 }

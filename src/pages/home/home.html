@@ -1,17 +1,22 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title class="primary">Home</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+    <div *ngIf="!hasConversion()">
+      <p>You are not currently following any conversions.</p>
+      <p>Add a new one by clicking the 'Add' tab.</p>
+    </div>
+
+    <div *ngIf="hasConversion()">
+      <p>Your conversions:</p>
+      <ion-list>
+        <div *ngFor="let c of conversions" ng-item>
+        
+          <span>{{c.fromCurrency}}</span> - <span>{{c.toCurrency}}</span> - <span>{{c.rate}}</span>
+        </div>
+      </ion-list>
+    </div>
 </ion-content>
