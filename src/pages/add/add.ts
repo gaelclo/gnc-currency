@@ -22,9 +22,11 @@ export class AddPage {
   }
 
   add(): void {
-    if(this.fromCurrency && this.toCurrency) this.apiCurrency.addConversion(this.fromCurrency, this.toCurrency);
-    this.fromCurrency = "";
-    this.toCurrency = ""; 
-    this.navCtrl.setPages([HomePage]);
+    if(this.fromCurrency && this.toCurrency) {
+      this.apiCurrency.addConversion(this.fromCurrency, this.toCurrency);
+      this.fromCurrency = "";
+      this.toCurrency = ""; 
+      this.navCtrl.setPages([HomePage]);
+    }
    }
 }

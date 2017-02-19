@@ -11,12 +11,27 @@
     </div>
 
     <div *ngIf="hasConversion()">
-      <p>Your conversions:</p>
       <ion-list>
-        <div *ngFor="let c of conversions" ng-item>
-        
-          <span>{{c.fromCurrency}}</span> - <span>{{c.toCurrency}}</span> - <span>{{c.rate}}</span>
-        </div>
+        <ion-list-header>
+            Favorites
+        </ion-list-header>
+
+          <ion-item-sliding *ngFor="let c of conversions">
+            <ion-item>
+                <ion-card>
+                    <ion-card-content>
+                      <span class="span25">1 {{c.fromCurrency}}</span>
+                      <ion-icon name="arrow-round-forward"></ion-icon>
+                      <span class="span25">{{c.rate}} {{c.toCurrency}}</span>
+                      <ion-icon name="{{c.trend ? 'trending-up' : 'trending-down'}}" color="{{c.trend ? 'secondary' : 'danger'}}" item-right></ion-icon>
+                    </ion-card-content>
+                </ion-card>
+            </ion-item>
+            <ion-item-options>
+              <button ion-button (click)="more(c)" color="secondary" class="smallOptions">More</button>
+              <button ion-button (click)="delete(c)" color="danger" class="smallOptions">Delete</button>
+            </ion-item-options>
+          </ion-item-sliding>
       </ion-list>
     </div>
 </ion-content>

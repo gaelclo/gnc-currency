@@ -19,4 +19,16 @@ export class HomePage {
   hasConversion(): boolean {
     return this.conversions && this.conversions.length > 0;
   }
+
+  logDrag(event: any): void {
+    console.log('event drag', event);
+  }
+
+  delete(c: any): void {
+    this.conversions = this.apiCurrency.delete(c);
+  }
+
+  more(c: any): void {
+    // TODO
+  }
 }

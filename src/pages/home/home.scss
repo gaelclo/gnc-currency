@@ -1,3 +1,22 @@
 page-home {
+    .col-xs {
+        width: 30%;
+        float: left;
+    }
+    .smallOptions {
+        margin: 26px 0 !important;
+        height: calc(100% - 50px) !important;
+    }
 
+    .span25 {
+        width: 25% !important;
+        display: inline-block;
+        text-align: center;
+        margin: 0 6% !important;
+    }
+
+    ion-list-header {
+        border: 0 !important;
+        margin-bottom: 0 !important;
+    }
 }
