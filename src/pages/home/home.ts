@@ -2,6 +2,11 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {ApiCurrency} from '../../shared/api-currency.service';
 
+function parseExchangeRate(data): void {
+    var name = data.query.results.row.name;
+    var rate = parseFloat(data.query.results.row.rate);
+    console.log("Exchange rate " + name + " is " + rate);
+  }
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -29,6 +34,12 @@ export class HomePage {
   }
 
   more(c: any): void {
-    // TODO
+    console.log('v=', c);
+    if(c.show) {
+      c.show = false;
+    }
+    else {
+      c.show = true;
+    }
   }
 }

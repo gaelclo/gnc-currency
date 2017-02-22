@@ -18,18 +18,23 @@
 
           <ion-item-sliding *ngFor="let c of conversions">
             <ion-item>
-                <ion-card>
+                <ion-card (click)="more(c)">
                     <ion-card-content>
                       <span class="span25">1 {{c.fromCurrency}}</span>
                       <ion-icon name="arrow-round-forward"></ion-icon>
                       <span class="span25">{{c.rate}} {{c.toCurrency}}</span>
                       <ion-icon name="{{c.trend ? 'trending-up' : 'trending-down'}}" color="{{c.trend ? 'secondary' : 'danger'}}" item-right></ion-icon>
                     </ion-card-content>
+                    <div *ngIf="c.show" class="more">
+                        <div>
+                        <p>History</p>
+                        <p>{{c.previous.date}}: {{c.previous.rate}}</p>
+                        </div>
+                    </div>
                 </ion-card>
             </ion-item>
             <ion-item-options>
-              <button ion-button (click)="more(c)" color="secondary" class="smallOptions">More</button>
-              <button ion-button (click)="delete(c)" color="danger" class="smallOptions">Delete</button>
+              <button ion-button (click)="delete(c)" color="danger" class="smallOptions"><ion-icon name="trash"></ion-icon></button>
             </ion-item-options>
           </ion-item-sliding>
       </ion-list>

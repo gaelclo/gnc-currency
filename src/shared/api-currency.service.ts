@@ -10,20 +10,21 @@ import * as moment from 'moment';
 export class ApiCurrency {
 
     private url: string = 'http://api.fixer.io/';
+    private urlYahoo: string = "";
     private currenciesData: string = '../../assets/currency.json'; 
 
     private conversions = [];
 
     constructor(public toastController: ToastController, private http: Http) {
-        this.addConversion('GBP', 'EUR');
-        this.addConversion('GBP', 'USD');
-        this.addConversion('GBP', 'THB');
-        this.addConversion('AUD', 'GBP');
+        this.addConversion('GBP', 'EUR', false);
+        this.addConversion('GBP', 'USD', false);
+        this.addConversion('GBP', 'THB', false);
+        this.addConversion('AUD', 'GBP', false);
     }
 
     getLastDayCurrency(currencyIn: string, currencyOut: string): Observable<any> {
-        console.log('moment-1:',moment().subtract(3, 'd').format('YYYY-MM-DD'));
-        return this.http.get(this.url + moment().subtract(3, 'd').format('YYYY-MM-DD') + '?base=' + currencyIn + '&symbols=' + currencyOut);
+        console.log('moment-1:',moment().subtract(1, 'd').format('YYYY-MM-DD'));
+        return this.http.get(this.url + moment().subtract(1, 'd').format('YYYY-MM-DD') + '?base=' + currencyIn + '&symbols=' + currencyOut);
     }
 
     getCurrencyValue(currencyIn: string, currencyOut: string): Observable<any> {
@@ -34,7 +35,7 @@ export class ApiCurrency {
         return this.http.get(this.currenciesData);
     }
 
-    addConversion(fromCurrency: string, toCurrency: string): void {
+    addConversion(fromCurrency: string, toCurrency: string, toast: boolean): void {
         this.getCurrencyValue(fromCurrency, toCurrency).subscribe(r1 => {
             this.getLastDayCurrency(fromCurrency, toCurrency).subscribe(r2 => {
                 let rate1 = JSON.parse(r1._body).rates;
@@ -44,14 +45,20 @@ export class ApiCurrency {
                 console.log('rate2:',rate2);
                 console.log('p=', parseFloat(rate1[toCurrency]))
                 console.log('trend:',trend);
-                this.conversions.push({fromCurrency: fromCurrency, toCurrency: toCurrency, rate: rate1[toCurrency], trend: trend});
-                let toast = this.toastController.create({
-                    message: 'Conversions added.',
-                    duration: 2000,
-                    position: 'bottom'
+                let previous = JSON.parse(r2._body);
+                previous.rate = rate2[toCurrency];
+                this.conversions.push({fromCurrency: fromCurrency, toCurrency: toCurrency, rate: rate1[toCurrency], trend: trend, 
+                    previous: previous});
+                if(toast) {
+                    let toast = this.toastController.create({
+                            message: 'Conversion added.',
+                            duration: 2000,
+                            position: 'bottom'
                     });
                     toast.present();
-                });
+                }
+            });
+                
         });
     }
 
@@ -61,6 +68,12 @@ export class ApiCurrency {
 
     delete(conversion: any): Array<any> {
         this.conversions.splice(this.conversions.indexOf(conversion), 1);
+        let toast = this.toastController.create({
+                        message: 'Conversion deleted.',
+                        duration: 2000,
+                        position: 'bottom'
+                    });
+        toast.present();
         return this.conversions;
     }
 }

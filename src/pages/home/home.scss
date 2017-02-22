@@ -19,4 +19,14 @@ page-home {
         border: 0 !important;
         margin-bottom: 0 !important;
     }
+
+    .more {
+        margin: 13px 16px;
+        border-top: 1px solid gray;
+        color: black;
+    }
+    .more > div {
+        padding-top: 5%;
+        padding-left: 12%;
+    }
 }
